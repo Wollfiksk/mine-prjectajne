@@ -13,9 +13,9 @@ velikost_micku = 50
 rychlost_micku_x = 0.5
 rychlost_micku_y = 0.5
 
-pozice_hrace_x = 200
-pozice_hrace_y = 100
-rychlost_hrace = 0.2
+pozice_hrace_x = 10
+pozice_hrace_y = 10
+rychlost_hrace = 0.3
 
 while True:
     for udalost in pygame.event.get():
@@ -25,8 +25,12 @@ while True:
     
     stisknute_klavesy = pygame.key.get_pressed()
     
-    if stisknute_klavesy[pygame.K_RIGHT]:
-        pozice_hrace_x += rychlost_hrace
+    if stisknute_klavesy[pygame.K_UP]:
+        pozice_hrace_y -= rychlost_hrace
+        
+    if stisknute_klavesy[pygame.K_DOWN]:
+        pozice_hrace_y += rychlost_hrace
+    
     
     pozice_micku_x += rychlost_micku_x
     pozice_micku_y += rychlost_micku_y
@@ -47,7 +51,7 @@ while True:
     
     okno.fill((255, 255, 255))
     
-    pygame.draw.rect(okno, (0, 0, 0), (pozice_hrace_x, pozice_hrace_y, 50, 50))
+    pygame.draw.rect(okno, (0, 0, 0), (pozice_hrace_x, pozice_hrace_y, 50,120))
     pygame.draw.ellipse(okno, (0, 0, 255), (pozice_micku_x, pozice_micku_y, velikost_micku, velikost_micku))
     
     pygame.display.update()
