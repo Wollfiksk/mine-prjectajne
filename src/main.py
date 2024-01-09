@@ -13,15 +13,15 @@ velikost_micku = 50
 rychlost_micku_x = 0.5
 rychlost_micku_y = 0.5
 
-velikost_hrace_vyska = 120
+velikost_hrace_vyska = 150
 velikost_hrace_sirka = 50
 
 
 pozice_hrace_x = 10
 pozice_hrace_y = 300
-rychlost_hrace = 0.3
+rychlost_hrace = 0.6
 
-velikost_hrace_vyska2 = 120
+velikost_hrace_vyska2 = 150
 velikost_hrace_sirka2 = 50
 
 
