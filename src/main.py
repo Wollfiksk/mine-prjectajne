@@ -1,5 +1,5 @@
 import sys
-
+import random
 import pygame
 pygame.init()
 
@@ -7,8 +7,8 @@ rozliseni_okna = (800, 600)
 
 okno = pygame.display.set_mode(rozliseni_okna)
 
-pozice_micku_x = 300
-pozice_micku_y = 200
+pozice_micku_x = 400
+pozice_micku_y = 300
 velikost_micku = 50
 rychlost_micku_x = 0.5
 rychlost_micku_y = 0.5
@@ -64,18 +64,26 @@ while True:
     if pozice_micku_y < 0:
         pozice_micku_y = 0
         rychlost_micku_y *= -1
+        
+    rand_pri_kol = random.randint(1, 2)
     
     hrac2_rect = pygame.Rect(pozice_hrace_x2, pozice_hrace_y2, velikost_hrace_sirka2, velikost_hrace_vyska2)
     hrac_rect = pygame.Rect(pozice_hrace_x, pozice_hrace_y, velikost_hrace_sirka, velikost_hrace_vyska)
     micek_rect = pygame.Rect(pozice_micku_x, pozice_micku_y, velikost_micku, velikost_micku)
 
     if hrac_rect.colliderect(micek_rect):
-        rychlost_micku_x *= -1
-        rychlost_micku_y *= -1
+        rychlost_micku_x = abs(rychlost_micku_x)  
+        if rand_pri_kol == 1:
+            rychlost_micku_y *= -1.05
+        if rand_pri_kol == 2:
+            rychlost_micku_y *= 1.05
+
     if hrac2_rect.colliderect(micek_rect):
-        rychlost_micku_x *= -1
-        rychlost_micku_y *= -1
-    
+        rychlost_micku_x = -abs(rychlost_micku_x)  
+        if rand_pri_kol == 1:
+            rychlost_micku_y *= -1.05
+        if rand_pri_kol == 2:
+            rychlost_micku_y *= 1.05
     
     if pozice_micku_x > rozliseni_okna[0] - velikost_micku:
         print("you lost")
