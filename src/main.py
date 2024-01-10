@@ -18,6 +18,7 @@ rychlost_micku_y = 0.5
 velikost_hrace_vyska = 150
 velikost_hrace_sirka = 50
 
+skore = 0
 
 pozice_hrace_x = 10
 pozice_hrace_y = 300
@@ -33,11 +34,13 @@ pozice_hrace_y2 = 300
 rychlost_hrace2 = 0.3
 
 font = pygame.font.SysFont(None , 40)
+font2 = pygame.font.SysFont(None , 40)
+
 
 fps = str(int(clock.get_fps()))
 
-def draw_text(text, font, barva, x, y):
-    txtimg = font.render(text, True, barva)
+def draw_text(x, y):
+    txtimg = font2.render("Skore: " + str(skore), True, (0, 0, 0))
     okno.blit(txtimg, (x, y))
 
 def fps_counter():
@@ -54,8 +57,12 @@ while True:
     stisknute_klavesy = pygame.key.get_pressed()
     
     okno.fill((255, 255, 255))
-    
-    draw_text("skore", font, (0, 0, 0), 750, 0)
+    if skore > -1 and skore < 9:
+        draw_text(690, 0)
+    if skore > 9 and skore < 99:
+        draw_text(675, 0)
+    if skore > 98:
+        draw_text(650, 0)
     
     fps_counter()
     clock.tick()
@@ -97,14 +104,16 @@ while True:
     micek_rect = pygame.Rect(pozice_micku_x, pozice_micku_y, velikost_micku, velikost_micku)
 
     if hrac_rect.colliderect(micek_rect):
-        rychlost_micku_x = abs(rychlost_micku_x)  
+        rychlost_micku_x = abs(rychlost_micku_x)
+        skore += 1
         if rand_pri_kol == 1:
             rychlost_micku_y *= -1.05
         if rand_pri_kol == 2:
             rychlost_micku_y *= 1.05
 
     if hrac2_rect.colliderect(micek_rect):
-        rychlost_micku_x = -abs(rychlost_micku_x)  
+        rychlost_micku_x = -abs(rychlost_micku_x)
+        skore += 1
         if rand_pri_kol == 1:
             rychlost_micku_y *= -1.05
         if rand_pri_kol == 2:
