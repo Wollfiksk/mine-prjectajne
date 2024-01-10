@@ -1,6 +1,7 @@
 import sys
 import random
 import pygame
+
 pygame.init()
 pygame.font.init()
 
@@ -60,16 +61,20 @@ while True:
     clock.tick()
     
     if stisknute_klavesy[pygame.K_w]:
-        pozice_hrace_y -= rychlost_hrace
+        if pozice_hrace_y > 0:
+            pozice_hrace_y -= rychlost_hrace
         
     if stisknute_klavesy[pygame.K_s]:
-        pozice_hrace_y += rychlost_hrace
+        if pozice_hrace_y < 450:
+            pozice_hrace_y += rychlost_hrace
         
     if stisknute_klavesy[pygame.K_UP]:
-        pozice_hrace_y2 -= rychlost_hrace2
+        if pozice_hrace_y2 > 0:
+            pozice_hrace_y2 -= rychlost_hrace2
         
     if stisknute_klavesy[pygame.K_DOWN]:
-        pozice_hrace_y2 += rychlost_hrace2
+        if pozice_hrace_y2 < 450:
+            pozice_hrace_y2 += rychlost_hrace2
     
     
     pozice_micku_x += rychlost_micku_x
