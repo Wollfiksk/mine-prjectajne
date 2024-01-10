@@ -65,7 +65,7 @@ while True:
             pozice_hrace_y -= rychlost_hrace
         
     if stisknute_klavesy[pygame.K_s]:
-        if pozice_hrace_y < 450:
+        if pozice_hrace_y < (rozliseni_okna[1] - velikost_hrace_vyska):
             pozice_hrace_y += rychlost_hrace
         
     if stisknute_klavesy[pygame.K_UP]:
@@ -73,7 +73,7 @@ while True:
             pozice_hrace_y2 -= rychlost_hrace2
         
     if stisknute_klavesy[pygame.K_DOWN]:
-        if pozice_hrace_y2 < 450:
+        if pozice_hrace_y2 < (rozliseni_okna[1] - velikost_hrace_vyska2):
             pozice_hrace_y2 += rychlost_hrace2
     
     
