@@ -12,8 +12,8 @@ okno = pygame.display.set_mode(rozliseni_okna)
 pozice_micku_x = 400
 pozice_micku_y = 300
 velikost_micku = 50
-rychlost_micku_x = 0.5
-rychlost_micku_y = 0.5
+rychlost_micku_x = 0.3
+rychlost_micku_y = 0.3
 
 velikost_hrace_vyska = 150
 velikost_hrace_sirka = 50
