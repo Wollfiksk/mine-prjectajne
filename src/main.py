@@ -64,7 +64,7 @@ def reset_game():
     pozice_micku_x = 400
     pozice_micku_y = 300
     skore = 0
-
+    
 while True:
     for udalost in pygame.event.get():
         if udalost.type == pygame.QUIT:
@@ -164,9 +164,9 @@ while True:
             rychlost_micku_x = abs(rychlost_micku_x)
             skore += 1
             if rand_pri_kol == 1:
-                rychlost_micku_y *= -1.05
+                rychlost_micku_y *= -1
             if rand_pri_kol == 2:
-                rychlost_micku_y *= 1.05
+                rychlost_micku_y *= 1
 
         if hrac2_rect.colliderect(micek_rect):
             rychlost_micku_x = -abs(rychlost_micku_x)
