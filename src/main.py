@@ -8,6 +8,9 @@ pygame.font.init()
 rozliseni_okna = (800, 600)
 
 okno = pygame.display.set_mode(rozliseni_okna)
+soubor = open("G:\Python\mine-prjectajne\save", 'w', encoding = 'utf-8')
+
+saveskore = soubor.readline()
 
 pozice_micku_x = 400
 pozice_micku_y = 300
@@ -83,6 +86,8 @@ while True:
                 if button_rect2.collidepoint(udalost.pos):
                     print("Quited")
                     quit()
+                    soubor2 = open("G:\Python\mine-prjectajne\save", 'w', encoding = 'utf-8')
+                    
         
     
     if esc:
