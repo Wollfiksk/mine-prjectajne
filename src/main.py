@@ -180,7 +180,23 @@ while True:
         pozice_micku_x += rychlost_micku_x
         pozice_micku_y += rychlost_micku_y
         
-        
+        rand_pri_kol = random.randint(1, 2)
+       
+        if hrac_rect.colliderect(micek_rect):
+            rychlost_micku_x = abs(rychlost_micku_x)
+            skore += 1
+            if rand_pri_kol == 1:
+                rychlost_micku_y *= -1
+            if rand_pri_kol == 2:
+                rychlost_micku_y *= 1
+
+        if hrac2_rect.colliderect(micek_rect):
+            rychlost_micku_x = -abs(rychlost_micku_x)
+            skore += 1
+            if rand_pri_kol == 1:
+                rychlost_micku_y *= -1
+            if rand_pri_kol == 2:
+                rychlost_micku_y *= 1
         if pozice_micku_x < 0:
             print("you lost")
             print("you lost")
