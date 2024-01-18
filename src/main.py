@@ -1,6 +1,8 @@
 import sys
 import random
 import pygame
+import time
+
 
 pygame.init()
 pygame.font.init()
@@ -8,9 +10,16 @@ pygame.font.init()
 rozliseni_okna = (800, 600)
 
 okno = pygame.display.set_mode(rozliseni_okna)
-soubor = open("G:\Python\mine-prjectajne\save", 'w', encoding = 'utf-8')
+soubor = open("G:\Python\mine-prjectajne\save\Save.txt", 'r', encoding = 'utf-8')
 
-saveskore = soubor.readline()
+for jeden_radek in soubor:
+    skorestr = jeden_radek
+    skore = int(skorestr)
+else:
+    print(skore)
+        
+
+soubor.close()
 
 pozice_micku_x = 400
 pozice_micku_y = 300
@@ -20,8 +29,6 @@ rychlost_micku_y = 0.3
 
 velikost_hrace_vyska = 150
 velikost_hrace_sirka = 50
-
-skore = 0
 
 pozice_hrace_x = 10
 pozice_hrace_y = 300
@@ -86,8 +93,6 @@ while True:
                 if button_rect2.collidepoint(udalost.pos):
                     print("Quited")
                     quit()
-                    soubor2 = open("G:\Python\mine-prjectajne\save", 'w', encoding = 'utf-8')
-                    
         
     
     if esc:
@@ -106,6 +111,10 @@ while True:
         if is_hovered2:
             if pygame.mouse.get_pressed()[0]:  # Left mouse button is pressed
                 draw_button(button_rect2, click_color, "Quited")
+                soubor2 = open("G:\Python\mine-prjectajne\save\Save.txt", 'w', encoding = 'utf-8')
+                soubor2.write(str(skore))
+                soubor2.close()
+                    
                 quit()
             else:
                 draw_button(button_rect2, button_color, "Quit")
@@ -169,17 +178,17 @@ while True:
             rychlost_micku_x = abs(rychlost_micku_x)
             skore += 1
             if rand_pri_kol == 1:
-                rychlost_micku_y *= -1.05
+                rychlost_micku_y *= -1
             if rand_pri_kol == 2:
-                rychlost_micku_y *= 1.05
+                rychlost_micku_y *= 1
 
         if hrac2_rect.colliderect(micek_rect):
             rychlost_micku_x = -abs(rychlost_micku_x)
             skore += 1
             if rand_pri_kol == 1:
-                rychlost_micku_y *= -1.05
+                rychlost_micku_y *= -1
             if rand_pri_kol == 2:
-                rychlost_micku_y *= 1.05
+                rychlost_micku_y *= 1
         
         if pozice_micku_x > rozliseni_okna[0] - velikost_micku:
             print("you lost")
