@@ -25,7 +25,11 @@ randoms = random.randint(50,500)
 pozice_micku_y = randoms
 pozice_micku_x = 400
 velikost_micku = 50
-rychlost_micku_x = 0.3
+randoms2 = random.randint(1,2)
+if randoms2 == 1:
+    rychlost_micku_x = 0.3
+if randoms2 == 2:
+    rychlost_micku_x = -0.3
 rychlost_micku_y = 0.3
 
 velikost_hrace_vyska = 150
@@ -197,6 +201,7 @@ while True:
                 rychlost_micku_y *= -1
             if rand_pri_kol == 2:
                 rychlost_micku_y *= 1
+                
         if pozice_micku_x < 0:
             print("you lost")
             print("you lost")
