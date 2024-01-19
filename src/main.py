@@ -1,6 +1,8 @@
 import sys
 import random
 import pygame
+import time
+
 
 pygame.init()
 pygame.font.init()
@@ -8,17 +10,30 @@ pygame.font.init()
 rozliseni_okna = (800, 600)
 
 okno = pygame.display.set_mode(rozliseni_okna)
+soubor = open("G:\Python\mine-prjectajne\save\Save.txt", 'r', encoding = 'utf-8')
 
+for jeden_radek in soubor:
+    skorestr = jeden_radek
+    skore = int(skorestr)
+else:
+    print(skore)
+        
+
+soubor.close()
+
+randoms = random.randint(50,500)
+pozice_micku_y = randoms
 pozice_micku_x = 400
-pozice_micku_y = 300
 velikost_micku = 50
-rychlost_micku_x = 0.3
+randoms2 = random.randint(1,2)
+if randoms2 == 1:
+    rychlost_micku_x = 0.3
+if randoms2 == 2:
+    rychlost_micku_x = -0.3
 rychlost_micku_y = 0.3
 
 velikost_hrace_vyska = 150
 velikost_hrace_sirka = 50
-
-skore = 0
 
 pozice_hrace_x = 10
 pozice_hrace_y = 300
@@ -100,12 +115,16 @@ while True:
 
         if is_hovered2:
             if pygame.mouse.get_pressed()[0]:  # Left mouse button is pressed
-                draw_button(button_rect2, click_color, "Quited")
+                draw_button(button_rect2, click_color, "Quited and Saved")
+                soubor2 = open("G:\Python\mine-prjectajne\save\Save.txt", 'w', encoding = 'utf-8')
+                soubor2.write(str(skore))
+                soubor2.close()
+                    
                 quit()
             else:
-                draw_button(button_rect2, button_color, "Quit")
+                draw_button(button_rect2, button_color, "Quit and Save")
         else:
-            draw_button(button_rect2, button_color, "Quit")
+            draw_button(button_rect2, button_color, "Quit and Save")
             
         pygame.display.flip()
         
@@ -114,8 +133,9 @@ while True:
     if not esc:            
         stisknute_klavesy = pygame.key.get_pressed()
         
+        
         okno.fill((255, 255, 255))
-        if skore > -1 and skore < 9:
+        if skore > -1 and skore < 10:
             draw_text(690, 0)
         if skore > 9 and skore < 99:
             draw_text(675, 0)
@@ -123,43 +143,49 @@ while True:
             draw_text(650, 0)
         
         fps_counter()
-        clock.tick()
+        clock.tick(0)
+        hrac2_rect = pygame.Rect(pozice_hrace_x2, pozice_hrace_y2, velikost_hrace_sirka2, velikost_hrace_vyska2)
+        hrac_rect = pygame.Rect(pozice_hrace_x, pozice_hrace_y, velikost_hrace_sirka, velikost_hrace_vyska)
+        micek_rect = pygame.Rect(pozice_micku_x, pozice_micku_y, velikost_micku, velikost_micku)
+        
         
         if stisknute_klavesy[pygame.K_w]:
             if pozice_hrace_y > 0:
                 pozice_hrace_y -= rychlost_hrace
+            if hrac_rect.colliderect(micek_rect):
+                rychlost_micku_x = abs(rychlost_micku_x)
+                skore += 1
+                rychlost_micku_y -= rychlost_hrace
             
         if stisknute_klavesy[pygame.K_s]:
             if pozice_hrace_y < (rozliseni_okna[1] - velikost_hrace_vyska):
                 pozice_hrace_y += rychlost_hrace
+            if hrac_rect.colliderect(micek_rect):
+                rychlost_micku_x = abs(rychlost_micku_x)
+                skore += 1
+                rychlost_micku_y += rychlost_hrace
             
         if stisknute_klavesy[pygame.K_UP]:
             if pozice_hrace_y2 > 0:
                 pozice_hrace_y2 -= rychlost_hrace2
+            if hrac2_rect.colliderect(micek_rect):
+                rychlost_micku_x = abs(rychlost_micku_x)
+                skore += 1
+                rychlost_micku_y -= rychlost_hrace2
             
         if stisknute_klavesy[pygame.K_DOWN]:
             if pozice_hrace_y2 < (rozliseni_okna[1] - velikost_hrace_vyska2):
-                pozice_hrace_y2 += rychlost_hrace2 
+                pozice_hrace_y2 += rychlost_hrace2
+            if hrac2_rect.colliderect(micek_rect):
+                rychlost_micku_x = abs(rychlost_micku_x)
+                skore += 1
+                rychlost_micku_y += rychlost_hrace2
         
         pozice_micku_x += rychlost_micku_x
         pozice_micku_y += rychlost_micku_y
         
-        if pozice_micku_x < 0:
-            print("you lost")
-            print("you lost")
-            print("you lost")
-            print("you lost")
-            quit()
-        if pozice_micku_y < 0:
-            pozice_micku_y = 0
-            rychlost_micku_y *= -1
-            
         rand_pri_kol = random.randint(1, 2)
-        
-        hrac2_rect = pygame.Rect(pozice_hrace_x2, pozice_hrace_y2, velikost_hrace_sirka2, velikost_hrace_vyska2)
-        hrac_rect = pygame.Rect(pozice_hrace_x, pozice_hrace_y, velikost_hrace_sirka, velikost_hrace_vyska)
-        micek_rect = pygame.Rect(pozice_micku_x, pozice_micku_y, velikost_micku, velikost_micku)
-
+       
         if hrac_rect.colliderect(micek_rect):
             rychlost_micku_x = abs(rychlost_micku_x)
             skore += 1
@@ -172,24 +198,43 @@ while True:
             rychlost_micku_x = -abs(rychlost_micku_x)
             skore += 1
             if rand_pri_kol == 1:
-                rychlost_micku_y *= -1.05
+                rychlost_micku_y *= -1
             if rand_pri_kol == 2:
-                rychlost_micku_y *= 1.05
+                rychlost_micku_y *= 1
+                
+        if pozice_micku_x < 0:
+            print("you lost")
+            print("you lost")
+            print("you lost")
+            print("you lost")
+            soubor2 = open("G:\Python\mine-prjectajne\save\Save.txt", 'w', encoding = 'utf-8')
+            soubor2.write(str(0))
+            soubor2.close()
+            quit()
+            
+        if pozice_micku_y < 0:
+            pozice_micku_y = 0
+            rychlost_micku_y *= -1
+            
         
         if pozice_micku_x > rozliseni_okna[0] - velikost_micku:
             print("you lost")
             print("you lost")
             print("you lost")
             print("you lost")
+            soubor2 = open("G:\Python\mine-prjectajne\save\Save.txt", 'w', encoding = 'utf-8')
+            soubor2.write(str(0))
+            soubor2.close()
             quit()
 
         if pozice_micku_y > rozliseni_okna[1] - velikost_micku:
             pozice_micku_y = rozliseni_okna[1] - velikost_micku
             rychlost_micku_y *= -1
         
-        pygame.draw.rect(okno, (0, 0, 0), (pozice_hrace_x, pozice_hrace_y, velikost_hrace_sirka,velikost_hrace_vyska))
+        pygame.draw.rect(okno, (0, 0, 0), (pozice_hrace_x, pozice_hrace_y, velikost_hrace_sirka, velikost_hrace_vyska))
         pygame.draw.ellipse(okno, (0, 0, 255), (pozice_micku_x, pozice_micku_y, velikost_micku, velikost_micku))
-        pygame.draw.rect(okno, (0, 0, 0), (pozice_hrace_x2, pozice_hrace_y2, velikost_hrace_sirka2,velikost_hrace_vyska2))
+        pygame.draw.rect(okno, (0, 0, 0), (pozice_hrace_x2, pozice_hrace_y2, velikost_hrace_sirka2, velikost_hrace_vyska2))
+
         
         
         pygame.display.update()
