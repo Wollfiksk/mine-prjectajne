@@ -56,7 +56,7 @@ font2 = pygame.font.SysFont(None , 40)
 esc = False
 
 jo = False
-
+jo2 = False 
 fps = str(int(clock.get_fps()))
 
 def draw_button(rect, color, text):
@@ -153,55 +153,66 @@ while True:
             if pozice_hrace_y > 0:
                 pozice_hrace_y -= rychlost_hrace
             if hrac_rect.colliderect(micek_rect):
-                rychlost_micku_x = abs(rychlost_micku_x)
-                rychlost_micku_y -= rychlost_hrace * 0.2
+                if jo:
+                    rychlost_micku_x = abs(rychlost_micku_x)
+                    rychlost_micku_y -= rychlost_hrace * 0.5
+                    jo = False
             
         if stisknute_klavesy[pygame.K_s]:
             if pozice_hrace_y < (rozliseni_okna[1] - velikost_hrace_vyska):
                 pozice_hrace_y += rychlost_hrace
             if hrac_rect.colliderect(micek_rect):
-                rychlost_micku_x = abs(rychlost_micku_x)
-                rychlost_micku_y += rychlost_hrace * 0.2
-            
+                if jo:
+                    rychlost_micku_x = abs(rychlost_micku_x)
+                    rychlost_micku_y += rychlost_hrace * 0.5
+                    jo = False
+                    
         if stisknute_klavesy[pygame.K_UP]:
             if pozice_hrace_y2 > 0:
                 pozice_hrace_y2 -= rychlost_hrace2 
             if hrac2_rect.colliderect(micek_rect):
-                rychlost_micku_x = abs(rychlost_micku_x)
-                rychlost_micku_y -= rychlost_hrace2 * 0.2
-            
+                if jo2:
+                    rychlost_micku_x = abs(rychlost_micku_x)
+                    rychlost_micku_y -= rychlost_hrace2 * 0.5
+                    jo2 = False
+                    
         if stisknute_klavesy[pygame.K_DOWN]:
             if pozice_hrace_y2 < (rozliseni_okna[1] - velikost_hrace_vyska2):
                 pozice_hrace_y2 += rychlost_hrace2
             if hrac2_rect.colliderect(micek_rect):
-                rychlost_micku_x = abs(rychlost_micku_x)
-                rychlost_micku_y += rychlost_hrace2 * 0.2
-        
+                if jo2:
+                    rychlost_micku_x = abs(rychlost_micku_x)
+                    rychlost_micku_y += rychlost_hrace2 * 0.5
+                    jo2 = False
+                    
+                    
         pozice_micku_x += rychlost_micku_x
         pozice_micku_y += rychlost_micku_y
         
         rand_pri_kol = random.randint(1, 2)
        
         if hrac_rect.colliderect(micek_rect):
-            if jo:   
-                rychlost_micku_x = abs(rychlost_micku_x)
-                skore += 1
-                if rand_pri_kol == 1:
-                    rychlost_micku_y *= -1
-                if rand_pri_kol == 2:
-                    rychlost_micku_y *= 1
-                jo = False
+            if jo:
+                if not stisknute_klavesy[pygame.K_w] or stisknute_klavesy[pygame.K_s]:
+                    rychlost_micku_x = abs(rychlost_micku_x)
+                    skore += 1
+                    if rand_pri_kol == 1:
+                        rychlost_micku_y *= -1
+                    if rand_pri_kol == 2:
+                        rychlost_micku_y *= 1
+                    jo = False
             
         if hrac2_rect.colliderect(micek_rect):
             if jo2:
-                rychlost_micku_x = -abs(rychlost_micku_x)
-                skore += 1
-                if rand_pri_kol == 1:
-                    rychlost_micku_y *= -1
-                if rand_pri_kol == 2:
-                    rychlost_micku_y *= 1
-                jo2 = False  
-                print("letí skrz")
+                if not stisknute_klavesy[pygame.K_DOWN] or stisknute_klavesy[pygame.K_UP]:
+                    rychlost_micku_x = -abs(rychlost_micku_x)
+                    skore += 1
+                    if rand_pri_kol == 1:
+                        rychlost_micku_y *= -1
+                    if rand_pri_kol == 2:
+                        rychlost_micku_y *= 1
+                    jo2 = False
+                
         if not hrac2_rect.colliderect(micek_rect):
             jo2 = True
             
