@@ -15,8 +15,6 @@ soubor = open("G:\Python\mine-prjectajne\save\Save.txt", 'r', encoding = 'utf-8'
 for jeden_radek in soubor:
     skorestr = jeden_radek
     skore = int(skorestr)
-else:
-    print(skore)
         
 
 soubor.close()
@@ -46,7 +44,7 @@ clock = pygame.time.Clock()
 
 pozice_hrace_x2 = 740
 pozice_hrace_y2 = 300
-rychlost_hrace2 = 0.3
+rychlost_hrace2 = 0.6
 
 button_rect2 = pygame.Rect(300, 200, 200, 100)
 button_rect = pygame.Rect(300, 330, 200, 100)
@@ -56,6 +54,8 @@ click_color = (100, 100, 100)
 font = pygame.font.SysFont(None , 40)
 font2 = pygame.font.SysFont(None , 40)
 esc = False
+
+jo = False
 
 fps = str(int(clock.get_fps()))
 
@@ -109,7 +109,7 @@ while True:
             if pygame.mouse.get_pressed()[0]:  # Left mouse button is pressed
                 draw_button(button_rect, click_color, "Reseted")
             else:
-                draw_button(button_rect, button_color, "Reset")
+                wsdraw_button(button_rect, button_color, "Reset")
         else:
             draw_button(button_rect, button_color, "Reset")
 
@@ -119,7 +119,7 @@ while True:
                 soubor2 = open("G:\Python\mine-prjectajne\save\Save.txt", 'w', encoding = 'utf-8')
                 soubor2.write(str(skore))
                 soubor2.close()
-                    
+                
                 quit()
             else:
                 draw_button(button_rect2, button_color, "Quit and Save")
@@ -143,7 +143,7 @@ while True:
             draw_text(650, 0)
         
         fps_counter()
-        clock.tick(0)
+        clock.tick()
         hrac2_rect = pygame.Rect(pozice_hrace_x2, pozice_hrace_y2, velikost_hrace_sirka2, velikost_hrace_vyska2)
         hrac_rect = pygame.Rect(pozice_hrace_x, pozice_hrace_y, velikost_hrace_sirka, velikost_hrace_vyska)
         micek_rect = pygame.Rect(pozice_micku_x, pozice_micku_y, velikost_micku, velikost_micku)
@@ -154,32 +154,28 @@ while True:
                 pozice_hrace_y -= rychlost_hrace
             if hrac_rect.colliderect(micek_rect):
                 rychlost_micku_x = abs(rychlost_micku_x)
-                skore += 1
-                rychlost_micku_y -= rychlost_hrace
+                rychlost_micku_y -= rychlost_hrace * 0.2
             
         if stisknute_klavesy[pygame.K_s]:
             if pozice_hrace_y < (rozliseni_okna[1] - velikost_hrace_vyska):
                 pozice_hrace_y += rychlost_hrace
             if hrac_rect.colliderect(micek_rect):
                 rychlost_micku_x = abs(rychlost_micku_x)
-                skore += 1
-                rychlost_micku_y += rychlost_hrace
+                rychlost_micku_y += rychlost_hrace * 0.2
             
         if stisknute_klavesy[pygame.K_UP]:
             if pozice_hrace_y2 > 0:
-                pozice_hrace_y2 -= rychlost_hrace2
+                pozice_hrace_y2 -= rychlost_hrace2 
             if hrac2_rect.colliderect(micek_rect):
                 rychlost_micku_x = abs(rychlost_micku_x)
-                skore += 1
-                rychlost_micku_y -= rychlost_hrace2
+                rychlost_micku_y -= rychlost_hrace2 * 0.2
             
         if stisknute_klavesy[pygame.K_DOWN]:
             if pozice_hrace_y2 < (rozliseni_okna[1] - velikost_hrace_vyska2):
                 pozice_hrace_y2 += rychlost_hrace2
             if hrac2_rect.colliderect(micek_rect):
                 rychlost_micku_x = abs(rychlost_micku_x)
-                skore += 1
-                rychlost_micku_y += rychlost_hrace2
+                rychlost_micku_y += rychlost_hrace2 * 0.2
         
         pozice_micku_x += rychlost_micku_x
         pozice_micku_y += rychlost_micku_y
@@ -187,21 +183,32 @@ while True:
         rand_pri_kol = random.randint(1, 2)
        
         if hrac_rect.colliderect(micek_rect):
-            rychlost_micku_x = abs(rychlost_micku_x)
-            skore += 1
-            if rand_pri_kol == 1:
-                rychlost_micku_y *= -1
-            if rand_pri_kol == 2:
-                rychlost_micku_y *= 1
-
+            if jo:   
+                rychlost_micku_x = abs(rychlost_micku_x)
+                skore += 1
+                if rand_pri_kol == 1:
+                    rychlost_micku_y *= -1
+                if rand_pri_kol == 2:
+                    rychlost_micku_y *= 1
+                jo = False
+            
         if hrac2_rect.colliderect(micek_rect):
-            rychlost_micku_x = -abs(rychlost_micku_x)
-            skore += 1
-            if rand_pri_kol == 1:
-                rychlost_micku_y *= -1
-            if rand_pri_kol == 2:
-                rychlost_micku_y *= 1
-                
+            if jo2:
+                rychlost_micku_x = -abs(rychlost_micku_x)
+                skore += 1
+                if rand_pri_kol == 1:
+                    rychlost_micku_y *= -1
+                if rand_pri_kol == 2:
+                    rychlost_micku_y *= 1
+                jo2 = False  
+                print("letí skrz")
+        if not hrac2_rect.colliderect(micek_rect):
+            jo2 = True
+            
+        if not hrac_rect.colliderect(micek_rect):
+            jo = True
+            
+        
         if pozice_micku_x < 0:
             print("you lost")
             print("you lost")
